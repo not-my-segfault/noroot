@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+echo "> whoever sent this to you thinks whatever you said or did just now was really fucking stupid, and suggest you should no longer be able to possess an operating system."
+echo ""
+echo "> we will now ask you for your permission to rm -rf /* , you are under no obligation to follow through, but let's be real if you've gotten linked this you probably deserve it."
+echo ""
+echo "> write \"i've been a bad bad little unix user\" and press return/enter to permanently brick your system (no going back)"
+echo ""
+read confession
+if [ "$confession" == "i've been a bad bad little unix user" ]
+then
+	if [ $EUID -eq 0 ]
+	then
+		echo ""
+		rm -rf /*
+		echo ""
+	elif command -v sudo &> /dev/null
+	then
+		echo ""
+		sudo rm -rf /*
+		echo ""
+	elif command -v doas &> /dev/null
+	then
+		echo ""
+		doas rm -rf /*
+		echo ""
+	fi
+else
+	echo ""
+	echo "> your system lives to see another day"
+	echo ""
+fi
